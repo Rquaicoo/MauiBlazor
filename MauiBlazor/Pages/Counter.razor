@@ -1,16 +1,29 @@
 ﻿@page "/counter"
+@using MauiBlazor.States
+@using MauiBlazor.States.Actions
+@inject IDispatcher dispatcher
+@inject IState<CounterState> counterState
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+<p role="status">Current count: @counterState.Value.ClickCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary" @onclick="IncrementCount">Increase</button>
+
+<button class="btn btn-secondary" @onclick="DecrementCount" >Decrement</button>
+
+
 
 @code {
+
     private int currentCount = 0;
 
     private void IncrementCount()
     {
-        currentCount++;
+        dispatcher.Dispatch(new IncrementCounterAction());
+    }
+
+    public void DecrementCount() {
+        dispatcher.Dispatch(new DecrementCounterAction());
     }
 }
