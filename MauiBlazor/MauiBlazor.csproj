@@ -47,6 +47,12 @@
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		
+		<!-- Fluxor dependencies-->
+		<PackageReference Include="Fluxor" Version="5.4.0" />
+		<PackageReference Include="Fluxor.Blazor.Web" Version="5.4.0" />
+		<PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="5.4.0" />
+		
     </ItemGroup>
 
 </Project>
