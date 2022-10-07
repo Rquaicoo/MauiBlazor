@@ -1,15 +1,19 @@
 ﻿@page "/fetchdata"
 
 @using MauiBlazor.Data
+@using MauiBlazor.States
+@using MauiBlazor.States.Actions
+@inject IDispatcher dispatcher
 @inject WeatherForecastService ForecastService
+@inject IState<WeatherState> weatherState
 
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
 
-@if (forecasts == null)
+@if (weatherState.Value.IsLoading)
 {
-	<p><em>Loading...</em></p>
+	<p><em>Loadinggg...</em></p>
 }
 else
 {
@@ -23,7 +27,7 @@ else
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var forecast in forecasts)
+			@foreach (var forecast in weatherState.Value.Forecasts)
 			{
 				<tr>
 					<td>@forecast.Date.ToShortDateString()</td>
@@ -37,10 +41,11 @@ else
 }
 
 @code {
-	private WeatherForecast[] forecasts;
+	
 
-	protected override async Task OnInitializedAsync()
+	protected override void OnInitialized()
 	{
-		forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+		base.OnInitialized();
+		dispatcher.Dispatch(new FetchDataAction());
 	}
 }
